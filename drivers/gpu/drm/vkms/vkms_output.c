@@ -77,7 +77,11 @@ int vkms_output_init(struct vkms_device *vkmsdev)
 			return PTR_ERR(crtc_cfg->crtc);
 		}
 
-		/* Initialize the writeback component */
+		/*
+		 * vkms_enable_writeback_connector() reuses the same vkms_output by
+		 * initializing its embedded wb_encoder and wb_connector so CRC and
+		 * writeback composition stay anchored to this CRTC instance.
+		 */
 		if (vkms_config_crtc_get_writeback(crtc_cfg)) {
 			writeback = vkms_enable_writeback_connector(vkmsdev, crtc_cfg->crtc);
 			if (writeback)
